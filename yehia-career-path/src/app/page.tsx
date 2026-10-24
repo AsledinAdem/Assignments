@@ -5,13 +5,12 @@ const app = () => {
     <div className=" h-screen  w-full px-5">
       <div className="flex flex-col justify-center gap-5 mt-10 mx-auto max-w-300">
         <h1 className="text-3xl font-semibold text-slate-200">
-          Job application management <span className="text-amber-500"></span>
+          Meet <span className="text-amber-500">Yehia,</span>
         </h1>
 
         <p className="max-w-150 leading-7 mb-5">
-          This app is guide you to your goal and remember your path before you
-          chase every opportunity, you need to remember your goal. You start
-          with a clear goal.
+          Yehia graduate from Computer Science at the Lebanese University, First
+          Branch, with a goal of finding a job within two months.
         </p>
 
         <div className="flex gap-5">

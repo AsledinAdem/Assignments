@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Career Success Platform
 
-## Getting Started
+**Author:** Asledin Adem
+**Email:** asledin@gmail.com
 
-First, run the development server:
+## Description
+
+A Next.js app that helps job seekers prepare for and apply to jobs. It has a
+step-by-step career plan with a progress bar, a list of job opportunities with
+a detail page for each one, and a dashboard for tracking submitted applications
+by status.
+
+## Run locally
+
+1. Clone the repository and go into the folder:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+   git clone <https://github.com/AsledinAdem/Assignments.git>
+   cd <assignment-1-routing>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+   npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Start the development server:
 
-## Learn More
+```bash
+   npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Questions
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 1. Why did you use `await` when reading `params`?
 
-## Deploy on Vercel
+In current versions of Next.js, `params` is a Promise, not a plain object. The
+route value might not be ready yet when the page starts rendering, so I use
+`await params` to wait for it and then read the `id` from the result.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 2. Why is the route ID a string?
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The ID comes from the URL, and a URL is just text. Next.js can't know whether
+`/opportunities/1` means the number 1 or the text "1", so it always gives me a
+string. If my data uses numeric IDs, I have to convert one side before
+comparing, for example with `String(item.id) === id` or `Number(id)`.
+
+### 3. What belongs in the dashboard layout, and what belongs in each dashboard page?
+
+The layout holds the parts that stay the same on every dashboard page, such as
+the sidebar, the navigation, and the header. It wraps the page through
+`children` and doesn't reload when I move between dashboard pages. Each page
+holds only the content for its own route,
