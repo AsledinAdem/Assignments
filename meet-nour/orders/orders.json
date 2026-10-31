@@ -1,0 +1,75 @@
+[
+  {
+    "id": "NC-CA4F05ED",
+    "customerName": "Sultan ahmed",
+    "phone": "+961 543 435 435 435",
+    "productName": "Sea Salt & Sage Candle",
+    "quantity": 2,
+    "unitPrice": 17.5,
+    "total": 35,
+    "status": "Pending",
+    "date": "2026-10-31T05:15:56.303Z"
+  },
+  {
+    "id": "NC-6501A98B",
+    "customerName": "Sultan Ahmed",
+    "phone": "+961 2 131 121 313",
+    "productName": "Rose & Oud Candle",
+    "quantity": 2,
+    "unitPrice": 20,
+    "total": 40,
+    "status": "Pending",
+    "date": "2026-10-30T20:09:51.202Z"
+  },
+  {
+    "id": "NC-923AF509",
+    "customerName": "Mohammed Ahmed",
+    "phone": "+966 12 345 678",
+    "productName": "Cedar & Amber Candle",
+    "quantity": 2,
+    "unitPrice": 18,
+    "total": 36,
+    "status": "Pending",
+    "date": "2026-10-30T17:36:53.139Z"
+  },
+  {
+    "id": "NC-405B50EA",
+    "customerName": "Layla Karam",
+    "phone": "+961 543 435 435 435",
+    "productName": "Lavender Calm Candle",
+    "quantity": 2,
+    "unitPrice": 16,
+    "total": 32,
+    "status": "Preparing"
+  },
+  {
+    "id": "NC-6C7BDA65",
+    "customerName": "Omar Nasser",
+    "phone": "+961 454 354 354 543",
+    "productName": "Cedar & Amber Candle",
+    "quantity": 2,
+    "unitPrice": 18,
+    "total": 36,
+    "status": "Delivered"
+  },
+  {
+    "id": "NC-1A2B3C4D",
+    "customerName": "Asledin Adem",
+    "phone": "+251 944 125 161",
+    "productName": "Vanilla Soy Candle",
+    "quantity": 2,
+    "unitPrice": 15.5,
+    "total": 31,
+    "status": "Preparing"
+  },
+  {
+    "id": "NC-1FBFFF2F",
+    "customerName": "Maya Haddad",
+    "phone": "+961 64 564 565 645",
+    "productName": "Cedar & Amber Candle",
+    "quantity": 3,
+    "unitPrice": 18,
+    "total": 54,
+    "status": "Delivered"
+  }
+]
