@@ -1,27 +1,26 @@
-import fs from "node:fs/promises";
-import path from "node:path";
 import type { Order } from "@/types/order";
+import type { connectionDb } from "@/lib/mongodb";
 
-// The "database": orders/orders.json in the project root
-const folder = path.join(process.cwd(), "orders");
-const file = path.join(folder, "orders.json");
+type OrdersDatabase = Awaited<ReturnType<typeof connectionDb>>;
 
-export async function readOrders(): Promise<Order[]> {
-  try {
-    const text = await fs.readFile(file, "utf-8");
-    return JSON.parse(text); // throws if the JSON is broken (we never overwrite the file in that case)
-  } catch (error: any) {
-    if (error.code === "ENOENT") {
-      // the file doesn't exist yet, so create it with an empty list
-      await fs.mkdir(folder, { recursive: true });
-      await fs.writeFile(file, "[]");
-      return [];
-    }
-    throw error;
-  }
+export async function readOrders(db: OrdersDatabase): Promise<Order[]> {
+  const orders = await db
+    .collection("orders")
+    .find({})
+    .sort({ date: -1, _id: -1 })
+    .toArray();
+  return orders as unknown as Order[];
 }
 
-export async function writeOrders(orders: Order[]) {
-  await fs.mkdir(folder, { recursive: true });
-  await fs.writeFile(file, JSON.stringify(orders, null, 2));
+export async function insertOrder(db: OrdersDatabase, order: Order) {
+  await db.collection("orders").insertOne({ ...order });
+}
+
+export async function writeOrders(db: OrdersDatabase, orders: Order[]) {
+  const collection = db.collection("orders");
+  await collection.deleteMany({});
+
+  if (orders.length > 0) {
+    await collection.insertMany(orders);
+  }
 }

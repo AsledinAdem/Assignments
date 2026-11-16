@@ -25,9 +25,11 @@ const inputClass =
   "w-full rounded-xl border border-line bg-white px-3 py-2 text-sm";
 
 function getCountryCode(phone: string, countries: Country[]) {
-  return [...countries]
-    .sort((a, b) => b.dialCode.length - a.dialCode.length)
-    .find((country) => phone.startsWith(country.dialCode))?.code ?? "";
+  return (
+    [...countries]
+      .sort((a, b) => b.dialCode.length - a.dialCode.length)
+      .find((country) => phone.startsWith(country.dialCode))?.code ?? ""
+  );
 }
 
 export default function OrderForm({
@@ -169,25 +171,8 @@ export default function OrderForm({
         )}
       </div>
 
-      {/* <div>
-        <label htmlFor="phone" className="mb-1 block text-sm font-medium">
-          Phone
-        </label>
-        <input
-          id="phone"
-          type="tel"
-          inputMode="numeric"
-          maxLength={15}
-          value={phone}
-          onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
-          className={inputClass}
-        />
-        {errors.phone && (
-          <p className="mt-1 text-sm text-red-700">{errors.phone}</p>
-        )}
-      </div> */}
-      <div className=" flex items-center gap-3">
-        <div className="w-2/5">
+      <div className=" flex flex-col items-center gap-3">
+        <div className="w-full">
           <label htmlFor="country" className="mb-1 block text-sm font-medium">
             Country
           </label>
@@ -211,7 +196,7 @@ export default function OrderForm({
           )}
         </div>
 
-        <div className="w-3/5">
+        <div className="w-full">
           <label htmlFor="phone" className="mb-1 block text-sm font-medium">
             Phone
           </label>
@@ -304,7 +289,7 @@ export default function OrderForm({
       )}
 
       <p className="flex justify-between rounded-xl bg-sage-soft px-4 py-3 text-sm">
-        <span>Total (final amount is calculated by the server)</span>
+        <span className="font-bold">Total Amount </span>
         <strong>{totalPreview}</strong>
       </p>
 

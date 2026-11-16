@@ -23,7 +23,7 @@ export default function Modal({ title, onClose, children }: ModalProps) {
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-card p-6 shadow-xl"
+        className="max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-2xl bg-card p-6 shadow-xl"
         onClick={(e) => e.stopPropagation()} // clicks inside should not close it
       >
         <div className="mb-4 flex items-center justify-between">

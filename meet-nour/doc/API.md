@@ -1,7 +1,7 @@
 ## API
 
-The API uses JSON requests and responses. Order records are stored in
-`orders/orders.json`.
+The API uses JSON requests and responses. Order records are stored in the
+MongoDB `orders` collection.
 
 ### Endpoints
 
@@ -24,13 +24,17 @@ Content-Type: application/json
 
 ```json
 {
-  "customerName": "Maya Haddad",
-  "phone": "+961 70 000 001",
-  "productName": "Lavender Calm Candle",
-  "quantity": 2,
-  "unitPrice": 16
+  "customerName": "Asledin Adem",
+  "phone": "+251 944125161",
+  "productName": "Vanilla Soy Candle",
+  "quantity": 5,
+  "unitPrice": 15.5
 }
 ```
+
+Use commas between properties, double quotes around strings (including the
+phone number), and send the body as raw JSON with `Content-Type:
+application/json`.
 
 The server generates the order ID, sets the initial status to `Pending`,
 calculates the total, and records the creation date.
@@ -73,11 +77,12 @@ date to display.
 - `400 Bad Request`: invalid JSON, validation errors, or no allowed fields in a
   PATCH request. Validation errors use an object shaped like
   `{ "error": { "message": "Validation failed", "fields": { } } }`.
+- Customer name, phone, and product name are required for new orders.
 - Quantity must be a positive integer.
 - Unit price must be a number greater than or equal to zero, with at most two
   decimal places.
-- Phone numbers are checked against the expected country-code and digit format
-  (for example, `+961 70 000 001`).
+- Phone numbers are checked for a country code and 6 to 12 digits (for example,
+  `+251 944125161`).
 - A provided status must be `Pending`, `Preparing`, or `Delivered`.
 - `404 Not Found`: the requested order ID does not exist.
 - `500 Internal Server Error`: the server could not load, save, update, or

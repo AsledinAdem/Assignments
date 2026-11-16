@@ -1,5 +1,27 @@
 [
   {
+    "id": "NC-2205B74B",
+    "customerName": "dadaadas",
+    "phone": "+961 231 153 131",
+    "productName": "Lavender Calm Candle",
+    "quantity": 3,
+    "unitPrice": 16,
+    "total": 48,
+    "status": "Pending",
+    "date": "2026-11-16T08:04:44.774Z"
+  },
+  {
+    "id": "NC-3E1ED848",
+    "customerName": "Ali Abdella",
+    "phone": "+39 1 251 223 325",
+    "productName": "Rose & Oud Candle",
+    "quantity": 2,
+    "unitPrice": 20,
+    "total": 40,
+    "status": "Pending",
+    "date": "2026-11-16T07:42:49.819Z"
+  },
+  {
     "id": "NC-CA4F05ED",
     "customerName": "Sultan ahmed",
     "phone": "+961 543 435 435 435",

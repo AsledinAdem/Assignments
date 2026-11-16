@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
 import type { Order } from "@/types/order";
-import { readOrders, writeOrders } from "@/lib/orders-storage";
+import { insertOrder, readOrders } from "@/lib/orders-storage";
+import { connectionDb } from "@/lib/mongodb";
 import { validateOrder } from "@/lib/validate";
 import { calculateTotal } from "@/lib/order-utils";
 import { errorResponse } from "@/lib/response";
@@ -9,7 +10,7 @@ import { errorResponse } from "@/lib/response";
 // GET /api/orders -> all orders
 export async function GET() {
   try {
-    const orders = await readOrders();
+    const orders = await readOrders(await connectionDb());
     return NextResponse.json(orders);
   } catch {
     return errorResponse("Could not load orders", 500);
@@ -31,8 +32,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const orders = await readOrders();
-
+    const db = await connectionDb();
     // id, status and total are decided by the server, never by the client
     const newOrder: Order = {
       id: "NC-" + randomUUID().slice(0, 8).toUpperCase(),
@@ -46,8 +46,7 @@ export async function POST(request: Request) {
       date: new Date(),
     };
 
-    orders.unshift(newOrder);
-    await writeOrders(orders);
+    await insertOrder(db, newOrder);
     return NextResponse.json(newOrder, { status: 201 });
   } catch {
     return errorResponse("Could not save the order", 500);

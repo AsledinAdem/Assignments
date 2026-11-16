@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type { Order } from "@/types/order";
 import { readOrders, writeOrders } from "@/lib/orders-storage";
+import { connectionDb } from "@/lib/mongodb";
 import { validateOrder } from "@/lib/validate";
 import { calculateTotal } from "@/lib/order-utils";
 import { errorResponse } from "@/lib/response";
@@ -11,7 +12,7 @@ type Context = { params: Promise<{ id: string }> };
 export async function GET(request: Request, { params }: Context) {
   const { id } = await params;
   try {
-    const orders = await readOrders();
+    const orders = await readOrders(await connectionDb());
     const order = orders.find((o) => o.id === id);
     if (!order) return errorResponse("Order not found", 404);
     return NextResponse.json(order);
@@ -37,11 +38,19 @@ export async function PATCH(request: Request, { params }: Context) {
   }
 
   // Only copy the fields we allow. "id" and "total" are ignored on purpose.
-  const allowed = ["customerName", "phone", "productName", "quantity", "unitPrice", "status"];
+  const allowed = [
+    "customerName",
+    "phone",
+    "productName",
+    "quantity",
+    "unitPrice",
+    "status",
+  ];
   const updates: any = {};
   for (const key of allowed) {
     if (key in data) {
-      updates[key] = typeof data[key] === "string" ? data[key].trim() : data[key];
+      updates[key] =
+        typeof data[key] === "string" ? data[key].trim() : data[key];
     }
   }
   if (Object.keys(updates).length === 0) {
@@ -49,7 +58,8 @@ export async function PATCH(request: Request, { params }: Context) {
   }
 
   try {
-    const orders = await readOrders();
+    const db = await connectionDb();
+    const orders = await readOrders(db);
     const index = orders.findIndex((o) => o.id === id);
     if (index === -1) return errorResponse("Order not found", 404);
 
@@ -60,7 +70,7 @@ export async function PATCH(request: Request, { params }: Context) {
     }
 
     orders[index] = updated;
-    await writeOrders(orders);
+    await writeOrders(db, orders);
     return NextResponse.json(updated);
   } catch {
     return errorResponse("Could not update the order", 500);
@@ -71,11 +81,13 @@ export async function PATCH(request: Request, { params }: Context) {
 export async function DELETE(request: Request, { params }: Context) {
   const { id } = await params;
   try {
-    const orders = await readOrders();
+    const db = await connectionDb();
+    const orders = await readOrders(db);
     const remaining = orders.filter((o) => o.id !== id);
-    if (remaining.length === orders.length) return errorResponse("Order not found", 404);
+    if (remaining.length === orders.length)
+      return errorResponse("Order not found", 404);
 
-    await writeOrders(remaining);
+    await writeOrders(db, remaining);
     return NextResponse.json({ message: "Order deleted" });
   } catch {
     return errorResponse("Could not delete the order", 500);
