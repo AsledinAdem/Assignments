@@ -1,22 +1,13 @@
-import React from "react";
-import ViewModeContainer from "@/components/ViewModeContainer";
-import type { Employee } from "@/types";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import PostsExplorer from "@/components/PostsExplorer";
 
-async function getEmployee(): Promise<Employee | undefined> {
-  try {
-    const res = await fetch("https://jsonplaceholder.typicode.com/users/2", {
-      next: { revalidate: 3600 },
-    });
-    if (!res.ok) return undefined;
-    return await res.json();
-  } catch {
-    return undefined;
-  }
-}
-
-export default async function Page() {
-  // Real Server Component data fetching on the server
-  const employee = await getEmployee();
-
-  return <ViewModeContainer initialEmployee={employee} />;
+export default function page() {
+  return (
+    <div className="w-full min-h-screen flex flex-col justify-between gap-5 ">
+      <Header />
+      <PostsExplorer />
+      <Footer />
+    </div>
+  );
 }
